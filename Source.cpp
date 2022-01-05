@@ -1,80 +1,92 @@
 #include <iostream>
+
 using namespace std;
 
-class kasr
+class clo
 {
-	int surat, makhraj;
+	int second;
+	int min;
+	int hour;
 public:
-	kasr(int s, int m)
+	void time()
 	{
-		cout << "enter surat:";
-		cin >> s;
-		surat = s;
-		cout << "enter makhraj:";
-		cin >> m;
-		makhraj = m;
+		cout << "please enter second:";
+		cin >> second;
+		cout << "please enter min:";
+		cin >> min;
+		cout << "please enter hour:";
+		cin >> hour;
 	}
-	kasr(bool a, int s, int m)
+	void show()
 	{
-		cout << "enter alamat:";
-		cin >> a;
-		cout << "enter surat:";
-		cin >> s;
-		surat = s;
-		cout << "enter makhraj:";
-		cin >> m;
-		makhraj = m;
+		cout << hour << ":" << min << ":" << second << endl;
 	}
-	void show(string name)
-	{
-		if (makhraj == 1)
-			cout << name << ":" << surat << endl;
-		else if (makhraj != 0)
-			cout << name << ":" << surat << "/" << makhraj << endl;
-		else
-			cout << "eror" << endl;
-	};
-	void sum(kasr kasr_diagar);
-	void subtract(kasr kasr_digar);
-	void divide(kasr kasr_digar);
-	void multi(kasr kasr_digar);
+	void sumtimes(clo b);
+	void change();
+	void changesecond();
 };
-void kasr::sum(kasr kasr_diagar)
+void clo::change()
 {
-	int s = surat * kasr_diagar.makhraj + kasr_diagar.surat * makhraj;
-	int m = this->makhraj * kasr_diagar.makhraj;
-	cout << "sum:" << s << "/" << m<<endl;
+	int h = hour * 3600;
+	int m = min * 60;
+	cout << "second:" << m + h + second << endl;
 }
-void kasr::subtract(kasr kasr_digar)
+void clo::sumtimes(clo b)
 {
-	int s = surat * kasr_digar.makhraj - kasr_digar.surat * makhraj;
-	int m = this->makhraj * kasr_digar.makhraj;
-	cout << "subtract:" << s << "/" << m<<endl;
-
+	int s = second + b.second;
+	int m = min + b.min;
+	int h = hour + b.hour;
+	if (s > 60)
+	{
+		s = s % 60;
+		m=m + 1;
+	}
+	if (m > 60)
+	{
+		m = m % 60;
+		h=h + 1;
+	}
+	cout << "sum:" << h << ":" << m << ":" << s << endl;
 }
-void kasr::divide(kasr kasr_digar)
+void clo::changesecond()
 {
-	int s = surat * kasr_digar.makhraj;
-	int m = makhraj * kasr_digar.surat;
-	cout << "divide:" << s << "/" << m<<endl;
-}
-void kasr::multi(kasr kasr_digar)
-{
-	int s = surat * kasr_digar.surat;
-	int m = makhraj * kasr_digar.makhraj;
-	cout << "multi:" << s << "/" << m<<endl;
+	int s, m, h;
+	cout << "please enter second:";
+	cin >> s;
+	if (s < 60)
+	{
+		cout << "00" << ":" << "00" << ":" << s;
+	}
+	if (3600 > s && s > 60)
+	{
+		m = s / 60;
+		s = s % 60;
+		cout << "00" << ":" << m << ":" << s;
+	}
+	if (s > 3600)
+	{
+		h = s / 3600;
+		m = (s % 3600) / 60;
+		s = (s % 3600) % 60;
+		if (h < 10)
+			cout << "0" << h << ":" << m << ":" << s;
+		else
+			cout << h << ":" << m << ":" << s;
+	}
+	
+	
 }
 int main()
 {
-	cout << "kasr 1:" << endl;
-	kasr kasr1(0, 1);
-	cout << "kasr 2:" << endl;
-	kasr kasr2(0, 1);
-	string name = "kasr1";
-	kasr1.show(name);
-	name = "kasr2";
-	kasr2.show(name);
-	kasr1.sum(kasr2);
-	kasr1.multi(kasr2);
-	kasr1.divide(kasr2);
+	clo a, b, c;
+	cout << "time 1:" << endl;
+	a.time();
+	a.show();
+	cout << "time 2:" << endl;
+	b.time();
+	b.show();
+	a.sumtimes(b);
+	a.change();
+	c.changesecond();
+
 }
